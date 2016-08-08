@@ -62,7 +62,10 @@ COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 COPY ./contrib/ /opt/app-root
 
 # Drop the root user and make the content of /opt/app-root owned by user 1001
-RUN chown -R 1001:0 /opt/app-root && chmod -R ug+rwx /opt/app-root
+RUN chown -R 1001:0 /opt/app-root && \
+    chmod -R ug+rwx /opt/app-root && \
+    rm -f /usr/local/lib/node_modules/npm/.nyc_output/*
+
 USER 1001
 
 # Set the default CMD to print the usage of the language image
